@@ -1,0 +1,33 @@
+package com.example.travelagency2.service;
+
+import com.example.travelagency.model.CountryModel;
+import com.example.travelagency.repository.CountryRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+
+@Slf4j
+@Service
+public class CountryService {
+
+    private final CountryRepository countryRepository;
+
+
+    public CountryService(final CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
+    }
+
+    public List<CountryModel> getAllCountries(){
+        return countryRepository.findAll();
+    }
+    public void addNewCountry(CountryModel countryModel){
+        countryRepository.save(countryModel);
+    }
+
+    public void deleteCountryById(Long id){
+        countryRepository.deleteById(id);
+    }
+
+}
