@@ -1,7 +1,7 @@
 package com.example.travelagency2.repository;
 
-import com.example.travelagency.model.TravelModel;
-import com.example.travelagency.model.Type;
+import com.example.travelagency2.model.TravelModel;
+import com.example.travelagency2.model.Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -42,8 +42,11 @@ public interface TravelRepository extends JpaRepository<TravelModel, Long> {
 
     List<TravelModel>findAllByHotelModel_StarsNumber(Integer starsNumber);
 
-
-
     List<TravelModel>findAllByNumberOfDaysIs(Byte days); //sprawdzić bo jeszcze można coś dodać do nazwy metody
+
+    @Modifying
+    @Transactional
+    @Query(value = "SELECT t FROM TravelModel t WHERE t.startDate > :startDate1 AND t.startDate < :startDate2", nativeQuery = false)
+    List<TravelModel> findAllByStartDateIsBetw(@Param("startDate1") Date startDate1, @Param("startDate2") Date startDate2);
 
 }

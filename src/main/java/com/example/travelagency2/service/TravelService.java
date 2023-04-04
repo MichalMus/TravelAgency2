@@ -1,8 +1,8 @@
 package com.example.travelagency2.service;
 
-import com.example.travelagency.model.TravelModel;
-import com.example.travelagency.model.Type;
-import com.example.travelagency.repository.TravelRepository;
+import com.example.travelagency2.model.TravelModel;
+import com.example.travelagency2.model.Type;
+import com.example.travelagency2.repository.TravelRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +78,9 @@ public class TravelService {
         Integer ChildrenPrice = travelModel.get().getChildPrice();
         return (double) ((AdultsNumber * AdultPrice) + (ChildrenNumber * ChildrenPrice));
 
+    }
+    public List<TravelModel> findTravelsByStartDateIsNear(Date date1, Date date2) {
+        return travelRepository.findAllByStartDateIsBetw(date1,date2);
     }
 
 
