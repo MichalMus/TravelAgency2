@@ -92,4 +92,9 @@ public class TravelController {
         return ResponseEntity.ok(travelService.findTravelsByEndDateIsNear(date1,date2));
     }
 
+    @GetMapping("hotelStars/{stars}")
+    public ResponseEntity<List<TravelModel>> getAllTravelsByHotelStars(@PathVariable("stars") Byte stars) {
+        return ResponseEntity.ok(travelService.findTravelsByHotelStars(stars));
+    }
+
 }

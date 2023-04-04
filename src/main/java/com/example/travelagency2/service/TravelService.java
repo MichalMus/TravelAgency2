@@ -60,7 +60,7 @@ public class TravelService {
         return travelRepository.findAllByHotelTypeIs(type);
     }
 
-    public List<TravelModel> findTravelsByHotelStars(Integer hotelStars) {
+    public List<TravelModel> findTravelsByHotelStars(Byte hotelStars) {
         return travelRepository.findAllByHotelModel_StarsNumber(hotelStars);
     }
 
