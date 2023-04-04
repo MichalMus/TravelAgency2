@@ -49,4 +49,12 @@ public interface TravelRepository extends JpaRepository<TravelModel, Long> {
     @Query(value = "SELECT t FROM TravelModel t WHERE t.startDate > :startDate1 AND t.startDate < :startDate2", nativeQuery = false)
     List<TravelModel> findAllByStartDateIsBetw(@Param("startDate1") Date startDate1, @Param("startDate2") Date startDate2);
 
+
+    @Modifying
+    @Transactional
+    @Query(value = "SELECT t FROM TravelModel t WHERE t.endDate > :endDate1 AND t.endDate < :endDate2", nativeQuery = false)
+    List<TravelModel> findAllByEndDateIsBetw(@Param("endDate1") Date endDate1, @Param("endDate2") Date endDate2);
+
+
+
 }

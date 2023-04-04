@@ -83,4 +83,13 @@ public class TravelController {
     public ResponseEntity<Double> getTravelPrice(@PathVariable("id") Long id) {
         return ResponseEntity.ok(travelService.getPrice(id));
     }
+    @GetMapping("endDate/between")
+    public ResponseEntity<List<TravelModel>> getAllTravelsNearThisEndDate(@RequestBody DateDTO dateDTO) {
+        return ResponseEntity.ok(travelService.findTravelsByEndDateIsNear(dateDTO.getDate1(), dateDTO.getDate2()));
+    }
+    @GetMapping("endDate/{date1}/{date2}")
+    public ResponseEntity<List<TravelModel>> getAllTravelsNearThisEndDate(@PathVariable("date1") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date1, @PathVariable("date2")  @DateTimeFormat(pattern = "yyyy-MM-dd")Date date2) {
+        return ResponseEntity.ok(travelService.findTravelsByEndDateIsNear(date1,date2));
+    }
+
 }
