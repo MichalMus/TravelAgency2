@@ -83,5 +83,9 @@ public class TravelService {
         return travelRepository.findAllByStartDateIsBetw(date1,date2);
     }
 
+    public List<TravelModel> findTravelsByEndDateIsNear(Date date1, Date date2) {
+        return travelRepository.findAllByEndDateIsBetw(date1,date2);
+    }
+
 
 }
