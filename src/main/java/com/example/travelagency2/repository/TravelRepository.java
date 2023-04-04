@@ -40,7 +40,7 @@ public interface TravelRepository extends JpaRepository<TravelModel, Long> {
 
     List<TravelModel> findAllByHotelTypeIs(Type type); //jaki argument ma być przekazany do metody skoro to ENUM
 
-    List<TravelModel>findAllByHotelModel_StarsNumber(Integer starsNumber);
+    List<TravelModel> findAllByHotelModel_StarsNumber(Byte starsNumber);
 
     List<TravelModel>findAllByNumberOfDaysIs(Byte days); //sprawdzić bo jeszcze można coś dodać do nazwy metody
 
