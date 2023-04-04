@@ -1,7 +1,7 @@
 package com.example.travelagency2.service;
 
-import com.example.travelagency.model.CountryModel;
-import com.example.travelagency.repository.CountryRepository;
+import com.example.travelagency2.model.CountryModel;
+import com.example.travelagency2.repository.CountryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

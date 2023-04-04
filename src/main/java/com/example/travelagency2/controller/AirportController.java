@@ -1,7 +1,7 @@
 package com.example.travelagency2.controller;
 
-import com.example.travelagency.model.AirportModel;
-import com.example.travelagency.service.AirportService;
+import com.example.travelagency2.model.AirportModel;
+import com.example.travelagency2.service.AirportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

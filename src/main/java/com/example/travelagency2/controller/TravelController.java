@@ -1,16 +1,20 @@
 package com.example.travelagency2.controller;
 
-import com.example.travelagency.model.TravelModel;
-import com.example.travelagency.model.Type;
-import com.example.travelagency.service.TravelService;
+import com.example.travelagency2.model.DateDTO;
+import com.example.travelagency2.model.TravelModel;
+import com.example.travelagency2.model.Type;
+import com.example.travelagency2.service.TravelService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -47,6 +51,16 @@ public class TravelController {
     public ResponseEntity<List<TravelModel>> getAllByCountry(@PathVariable("country") String countryName) {
         return ResponseEntity.ok(travelService.findTravelsByCountry(countryName));
     }
+
+    @GetMapping("near/between")
+    public ResponseEntity<List<TravelModel>> getAllTravelsNearThisDate(@RequestBody DateDTO dateDTO) {
+        return ResponseEntity.ok(travelService.findTravelsByStartDateIsNear(dateDTO.getDate1(), dateDTO.getDate2()));
+    }
+    @GetMapping("near/{date1}/{date2}")
+    public ResponseEntity<List<TravelModel>> getAllTravelsNearThisDate(@PathVariable("date1") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date1, @PathVariable("date2")  @DateTimeFormat(pattern = "yyyy-MM-dd")Date date2) {
+        return ResponseEntity.ok(travelService.findTravelsByStartDateIsNear(date1,date2));
+    }
+
 
     @GetMapping("/airport/{airport}")
     public ResponseEntity<List<TravelModel>> getAllByAirport(@PathVariable("airport") String airport) {
