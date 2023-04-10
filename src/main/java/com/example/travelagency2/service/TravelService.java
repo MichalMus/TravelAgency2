@@ -70,7 +70,7 @@ public class TravelService {
 
 
     //sprawdzić czy poprawić
-    public Double getPrice(Long id){
+    public Double getPrice(Long id) {
         Optional<TravelModel> travelModel = travelRepository.findById(id);
         Byte AdultsNumber = travelModel.get().getAdultsNumber();
         Byte ChildrenNumber = travelModel.get().getChildrenNumber();
@@ -79,13 +79,24 @@ public class TravelService {
         return (double) ((AdultsNumber * AdultPrice) + (ChildrenNumber * ChildrenPrice));
 
     }
+
     public List<TravelModel> findTravelsByStartDateIsNear(Date date1, Date date2) {
-        return travelRepository.findAllByStartDateIsBetw(date1,date2);
+        return travelRepository.findAllByStartDateIsBetw(date1, date2);
     }
 
     public List<TravelModel> findTravelsByEndDateIsNear(Date date1, Date date2) {
-        return travelRepository.findAllByEndDateIsBetw(date1,date2);
+        return travelRepository.findAllByEndDateIsBetw(date1, date2);
     }
+
+    public List<TravelModel> findTravelsByNumberOfDays(Byte days) {
+        return travelRepository.findAllByNumberOfDaysIs(days);
+    }
+
+    public Optional<TravelModel> findTravelById(Long id) {
+        return travelRepository.findById(id);
+    }
+
+
 
 
 }

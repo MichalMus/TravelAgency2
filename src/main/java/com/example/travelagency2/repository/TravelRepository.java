@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -23,7 +24,8 @@ public interface TravelRepository extends JpaRepository<TravelModel, Long> {
     List<TravelModel> findAllByStartDateIsAfterOrderByContinentModelId(Date date);
 
     List<TravelModel> findAllByStartDateIsAfterOrderByCountryModelId(Date date);
-    List<TravelModel>findAllByCountryModel_CountryName(String name);
+
+    List<TravelModel> findAllByCountryModel_CountryName(String name);
 
     @Modifying
     @Transactional
@@ -42,7 +44,7 @@ public interface TravelRepository extends JpaRepository<TravelModel, Long> {
 
     List<TravelModel> findAllByHotelModel_StarsNumber(Byte starsNumber);
 
-    List<TravelModel>findAllByNumberOfDaysIs(Byte days); //sprawdzić bo jeszcze można coś dodać do nazwy metody
+    List<TravelModel> findAllByNumberOfDaysIs(Byte days);
 
     @Modifying
     @Transactional
@@ -55,6 +57,7 @@ public interface TravelRepository extends JpaRepository<TravelModel, Long> {
     @Query(value = "SELECT t FROM TravelModel t WHERE t.endDate > :endDate1 AND t.endDate < :endDate2", nativeQuery = false)
     List<TravelModel> findAllByEndDateIsBetw(@Param("endDate1") Date endDate1, @Param("endDate2") Date endDate2);
 
+    Optional<TravelModel> findById(Long id);
 
 
 }

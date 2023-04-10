@@ -1,5 +1,6 @@
 package com.example.travelagency2.controller;
 
+import com.example.travelagency2.exception.TravelNotFoundException;
 import com.example.travelagency2.model.DateDTO;
 import com.example.travelagency2.model.TravelModel;
 import com.example.travelagency2.model.Type;
@@ -96,5 +97,30 @@ public class TravelController {
     public ResponseEntity<List<TravelModel>> getAllTravelsByHotelStars(@PathVariable("stars") Byte stars) {
         return ResponseEntity.ok(travelService.findTravelsByHotelStars(stars));
     }
+    @GetMapping("/numberOfDays/{numbers}")
+    public ResponseEntity<List<TravelModel>> getAllTravelsByNumbersOfDays(@PathVariable("numbers") Byte numbers) {
+        return ResponseEntity.ok(travelService.findTravelsByNumberOfDays(numbers));
+    }
+
+    @GetMapping("/startDate/{startDate}")
+    public ResponseEntity<List<TravelModel>> getAllTravelsInThisDate(@PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) {
+        return ResponseEntity.ok(travelService.findTravelsByStartDate(startDate));
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<TravelModel> getTrById(@PathVariable("id") Long id) {
+        final TravelModel travelModel = travelService.findTravelById(id)
+                .orElseThrow(()-> new TravelNotFoundException(id));
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(travelModel);
+    }
+
+    @GetMapping("/endDate/{endDate}")
+    public ResponseEntity<List<TravelModel>> getAllTravelsInThisEndDate(@PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+        return ResponseEntity.ok(travelService.findTravelsByEndDate(endDate));
+    }
+
 
 }
