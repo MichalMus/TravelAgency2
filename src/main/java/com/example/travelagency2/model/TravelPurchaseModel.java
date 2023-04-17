@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,15 +24,19 @@ public class TravelPurchaseModel {
     private Long id;
 
     //sprawdzić pole poniżej - czy musi być przy tej relacji również to samo odniesienie w drugiej klasie
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "travel_model_id")
     private TravelModel travelModel;
 
-    @OneToMany
-    @Column(name = "participants")
-    private List<PersonsIdModel> personsIds;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonIgnore
+    private Set<PersonsIdModel> personsIds = new HashSet<>();
 
-    // nie wiem co z kwotą wymienioną w ostatnim punkcie
+    @Column(name = "adults_number")
+    private Byte adultsNumber;
 
+    @Column(name = "children_number")
+    private Byte childrenNumber;
 
 
 }

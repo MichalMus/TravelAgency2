@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
@@ -27,5 +28,8 @@ public class CityService {
 
     public void deleteCityById(Long id){
         cityRepository.deleteById(id);
+    }
+    public Optional<CityModel> getCityById(Long id){
+        return cityRepository.findById(id);
     }
 }

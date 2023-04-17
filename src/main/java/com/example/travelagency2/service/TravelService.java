@@ -69,17 +69,6 @@ public class TravelService {
     }
 
 
-    //sprawdzić czy poprawić
-    public Double getPrice(Long id) {
-        Optional<TravelModel> travelModel = travelRepository.findById(id);
-        Byte AdultsNumber = travelModel.get().getAdultsNumber();
-        Byte ChildrenNumber = travelModel.get().getChildrenNumber();
-        Integer AdultPrice = travelModel.get().getAdultPrice();
-        Integer ChildrenPrice = travelModel.get().getChildPrice();
-        return (double) ((AdultsNumber * AdultPrice) + (ChildrenNumber * ChildrenPrice));
-
-    }
-
     public List<TravelModel> findTravelsByStartDateIsNear(Date date1, Date date2) {
         return travelRepository.findAllByStartDateIsBetw(date1, date2);
     }
@@ -96,7 +85,31 @@ public class TravelService {
         return travelRepository.findById(id);
     }
 
+    public void addTravel(TravelModel travelModel){
+        travelRepository.save(travelModel);
+    }
 
+    public void deleteTravel(Long id){
+        travelRepository.deleteTravelModelByIdIs(id);
+    }
 
+    public void changeTravelModel(Long id, TravelModel travelModel){
+        Optional<TravelModel> travelModel1 = travelRepository.findById(id);
+        travelModel1.get().setStartDate(travelModel.getStartDate());
+        travelModel1.get().setEndDate(travelModel.getEndDate());
+        travelModel1.get().setNumberOfDays(travelModel.getNumberOfDays());
+        travelModel1.get().setHotelType(travelModel.getHotelType());
+        travelModel1.get().setAdultPrice(travelModel.getAdultPrice());
+        travelModel1.get().setChildPrice(travelModel.getChildPrice());
+        travelModel1.get().setPromotion(travelModel.getPromotion());
+        travelModel1.get().setAdultsNumber(travelModel.getAdultsNumber());
+        travelModel1.get().setChildrenNumber(travelModel.getChildrenNumber());
 
+        travelModel1.get().setStart(travelModel.getStart());
+        travelModel1.get().setDestination(travelModel.getDestination());
+        travelModel1.get().setHotelModel(travelModel.getHotelModel());
+        travelModel1.get().setCountryModel(travelModel.getCountryModel());
+        travelModel1.get().setContinentModel(travelModel.getContinentModel());
+        travelRepository.save(travelModel1.get());
+    }
 }

@@ -58,6 +58,6 @@ public interface TravelRepository extends JpaRepository<TravelModel, Long> {
     List<TravelModel> findAllByEndDateIsBetw(@Param("endDate1") Date endDate1, @Param("endDate2") Date endDate2);
 
     Optional<TravelModel> findById(Long id);
-
-
+    List<TravelModel>findAllByHotelModel_CityModel_CountryModel_CountryName(String name);
+    void deleteTravelModelByIdIs(Long id);
 }

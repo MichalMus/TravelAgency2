@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
@@ -30,8 +31,11 @@ public class AirportService {
         airportRepository.deleteById(id);
     }
 
-    public List<AirportModel> findAirportByCity2(String city){
+    public List<AirportModel> findAirportByCity2(String city) {
         return airportRepository.findAllByCityModel_CityNameEqualsIgnoreCase(city);
     }
 
+    public Optional<AirportModel> getAirportById(Long id) {
+        return airportRepository.findById(id);
+    }
 }
