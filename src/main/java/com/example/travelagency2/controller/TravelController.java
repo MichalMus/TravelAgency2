@@ -10,10 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -25,7 +22,6 @@ public class TravelController {
 
     private final TravelService travelService;
 
-    // dodać wyjątki
     @GetMapping("/promotion")
     public ResponseEntity<List<TravelModel>> getAllTravels() {
         return ResponseEntity.ok(travelService.findByPromotion());
@@ -38,30 +34,31 @@ public class TravelController {
                 .body(travelService.findByStartDateAfterNow());
     }
 
-    @GetMapping("near/continents")
+    @GetMapping("/near/continents")
     public ResponseEntity<List<TravelModel>> getAllTravelsByDatesOrderByContinents() {
         return ResponseEntity.ok(travelService.findByStartDateAfterNowOrderByContinent());
     }
 
-    @GetMapping("near/countries")
+    @GetMapping("/near/countries")
     public ResponseEntity<List<TravelModel>> getAllTravelsByDatesOrderByCountries() {
         return ResponseEntity.ok(travelService.findByStartDateAfterNowOrderByCountry());
+    }
+
+    @GetMapping("/near/between")
+    public ResponseEntity<List<TravelModel>> getAllTravelsNearThisDate(@RequestBody DateDTO dateDTO) {
+        return ResponseEntity.ok(travelService.findTravelsByStartDateIsNear(dateDTO.getDate1(), dateDTO.getDate2()));
+    }
+
+    @GetMapping("/near/{date1}/{date2}")
+    public ResponseEntity<List<TravelModel>> getAllTravelsNearThisDate(@PathVariable("date1") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date1, @PathVariable("date2") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date2) {
+        return ResponseEntity.ok(travelService.findTravelsByStartDateIsNear(date1, date2));
     }
 
     @GetMapping("/country/{country}")
     public ResponseEntity<List<TravelModel>> getAllByCountry(@PathVariable("country") String countryName) {
         return ResponseEntity.ok(travelService.findTravelsByCountry(countryName));
-    }
 
-    @GetMapping("near/between")
-    public ResponseEntity<List<TravelModel>> getAllTravelsNearThisDate(@RequestBody DateDTO dateDTO) {
-        return ResponseEntity.ok(travelService.findTravelsByStartDateIsNear(dateDTO.getDate1(), dateDTO.getDate2()));
     }
-    @GetMapping("near/{date1}/{date2}")
-    public ResponseEntity<List<TravelModel>> getAllTravelsNearThisDate(@PathVariable("date1") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date1, @PathVariable("date2")  @DateTimeFormat(pattern = "yyyy-MM-dd")Date date2) {
-        return ResponseEntity.ok(travelService.findTravelsByStartDateIsNear(date1,date2));
-    }
-
 
     @GetMapping("/airport/{airport}")
     public ResponseEntity<List<TravelModel>> getAllByAirport(@PathVariable("airport") String airport) {
@@ -79,27 +76,34 @@ public class TravelController {
     }
 
 
-    //sprawdzić czy poprawić
-    @GetMapping("/price/{id}")
-    public ResponseEntity<Double> getTravelPrice(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(travelService.getPrice(id));
-    }
-    @GetMapping("endDate/between")
+    @GetMapping("/endDate/between")
     public ResponseEntity<List<TravelModel>> getAllTravelsNearThisEndDate(@RequestBody DateDTO dateDTO) {
         return ResponseEntity.ok(travelService.findTravelsByEndDateIsNear(dateDTO.getDate1(), dateDTO.getDate2()));
     }
-    @GetMapping("endDate/{date1}/{date2}")
-    public ResponseEntity<List<TravelModel>> getAllTravelsNearThisEndDate(@PathVariable("date1") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date1, @PathVariable("date2")  @DateTimeFormat(pattern = "yyyy-MM-dd")Date date2) {
-        return ResponseEntity.ok(travelService.findTravelsByEndDateIsNear(date1,date2));
+
+    @GetMapping("/endDate/{date1}/{date2}")
+    public ResponseEntity<List<TravelModel>> getAllTravelsNearThisEndDate(@PathVariable("date1") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date1, @PathVariable("date2") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date2) {
+        return ResponseEntity.ok(travelService.findTravelsByEndDateIsNear(date1, date2));
     }
 
-    @GetMapping("hotelStars/{stars}")
+    @GetMapping("/hotelStars/{stars}")
     public ResponseEntity<List<TravelModel>> getAllTravelsByHotelStars(@PathVariable("stars") Byte stars) {
         return ResponseEntity.ok(travelService.findTravelsByHotelStars(stars));
     }
+
     @GetMapping("/numberOfDays/{numbers}")
     public ResponseEntity<List<TravelModel>> getAllTravelsByNumbersOfDays(@PathVariable("numbers") Byte numbers) {
         return ResponseEntity.ok(travelService.findTravelsByNumberOfDays(numbers));
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<TravelModel> getTrById(@PathVariable("id") Long id) {
+        final TravelModel travelModel = travelService.findTravelById(id)
+                .orElseThrow(() -> new TravelNotFoundException(id));
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(travelModel);
     }
 
     @GetMapping("/startDate/{startDate}")
@@ -107,20 +111,39 @@ public class TravelController {
         return ResponseEntity.ok(travelService.findTravelsByStartDate(startDate));
     }
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<TravelModel> getTrById(@PathVariable("id") Long id) {
-        final TravelModel travelModel = travelService.findTravelById(id)
-                .orElseThrow(()-> new TravelNotFoundException(id));
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(travelModel);
-    }
-
     @GetMapping("/endDate/{endDate}")
     public ResponseEntity<List<TravelModel>> getAllTravelsInThisEndDate(@PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         return ResponseEntity.ok(travelService.findTravelsByEndDate(endDate));
     }
 
+    @PostMapping("/addTravel")
+    public ResponseEntity addNewTravel(@RequestBody TravelModel travelModel) {
+        travelService.addTravel(travelModel);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+
+    }
+
+    @DeleteMapping("/deleteTravel/{id}")
+    public ResponseEntity deleteTravelById(@PathVariable("id") Long id) {
+        try {
+            travelService.deleteTravel(id);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e){ //spradzić czy dobrze zapisane tre wyjątki i poprawić WE WSZYSTKICH CONTROLERACH
+            e.printStackTrace();
+//            throw new TravelNotFoundException(id);
+        }
+
+        return null;
+    }
+
+    @PostMapping("/id/{id}")
+    public ResponseEntity<TravelModel> postTrById(@PathVariable("id") Long id, @RequestBody TravelModel travelModel) {
+        travelService.changeTravelModel(id,travelModel);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(travelModel);
+    }
 
 }
