@@ -1,8 +1,8 @@
 package com.example.travelagency2.service;
 
-import com.example.travelagency.model.TravelModel;
-import com.example.travelagency.model.TravelPurchaseModel;
-import com.example.travelagency.repository.TravelPurchaseRepository;
+import com.example.travelagency2.model.TravelModel;
+import com.example.travelagency2.model.TravelPurchaseModel;
+import com.example.travelagency2.repository.TravelPurchaseRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
