@@ -1,6 +1,5 @@
 package com.example.travelagency2.controller;
 
-import com.example.travelagency2.model.AirportModel;
 import com.example.travelagency2.model.CityModel;
 import com.example.travelagency2.repository.CityRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -9,12 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

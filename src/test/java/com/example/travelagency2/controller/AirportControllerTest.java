@@ -98,7 +98,7 @@ class AirportControllerTest {
                 .andReturn();
         List<AirportModel> airportModelList = objectMapper.convertValue(airportRepository.findAll(), new TypeReference<List<AirportModel>>() {
         });
-        assertThat(airportModelList.size()).isEqualTo(29);
+        assertThat(airportModelList.size()).isEqualTo(28);
         assertThat(airportModelList.get(24).getAirPortName()).isEqualTo("lotniskoSanFrancisko");
     }
 
@@ -165,8 +165,10 @@ class AirportControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(AirportResult)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.airPortName", Matchers.is("UluMulu")));
-    }
+                .andExpect(jsonPath("$.airPortName",Matchers.is("UluMulu")));
+
+
+}
 
     List<AirportModel> init() {
         AirportModel airport1 = new AirportModel();

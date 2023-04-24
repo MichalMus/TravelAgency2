@@ -67,7 +67,7 @@ public class AirportController {
         airportService.addAirport(airportModel);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(airportModel);
     }
 
 
