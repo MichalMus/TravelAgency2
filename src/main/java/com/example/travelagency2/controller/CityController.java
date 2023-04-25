@@ -40,7 +40,7 @@ public class CityController {
         cityService.addNewCity(cityModel);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(cityModel);
     }
 
     @DeleteMapping("/deleteCity/{id}")
@@ -57,23 +57,23 @@ public class CityController {
 
 
     // zapytać, która z metod będzie lepsza
-//    @PostMapping("/id/{id}")
-//    public ResponseEntity<CityModel> postCityById(@PathVariable("id") Long id, @RequestBody CityModel cityModel) {
-//        cityService.addNewCity(cityModel);
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .build();
-//    }
-
-    @PostMapping("/id")
-    public ResponseEntity<CityModel> postCityById(UriComponentsBuilder builder, @RequestBody CityModel cityModel) {
-        Long cityId = cityModel.getId();
-        UriComponents uriComponents = builder.path("/{id}").buildAndExpand(cityId);
+    @PostMapping("/id/{id}")
+    public ResponseEntity<CityModel> postCityById(@PathVariable("id") Long id, @RequestBody CityModel cityModel) {
         cityService.addNewCity(cityModel);
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .build();
+                .status(HttpStatus.OK)
+                .body(cityModel);
     }
+
+//    @PostMapping("/id")
+//    public ResponseEntity<CityModel> postCityById(UriComponentsBuilder builder, @RequestBody CityModel cityModel) {
+//        Long cityId = cityModel.getId();
+//        UriComponents uriComponents = builder.path("/{id}").buildAndExpand(cityId);
+//        cityService.addNewCity(cityModel);
+//        return ResponseEntity
+//                .status(HttpStatus.CREATED)
+//                .body(cityModel);
+//    }
 
 
 }
