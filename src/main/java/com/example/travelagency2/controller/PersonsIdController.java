@@ -38,7 +38,7 @@ public class PersonsIdController {
         personsIdService.addNewPersonsId(personsIdModel);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(personsIdModel);
     }
 
     @DeleteMapping("/deletePerson/{id}")
@@ -59,7 +59,13 @@ public class PersonsIdController {
         personsIdService.addNewPersonsId(personsIdModel);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(personsIdModel);
+    }
+
+    @GetMapping("/surname/{surname}")
+    public ResponseEntity<List<PersonsIdModel>> getAllPersonsBySurname(@PathVariable("surname") String surname) {
+        return ResponseEntity.ok(personsIdService.findPersonsBySurname(surname));
+
     }
 
 }

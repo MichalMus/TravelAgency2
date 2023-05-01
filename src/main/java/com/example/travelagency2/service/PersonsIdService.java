@@ -31,4 +31,7 @@ public class PersonsIdService {
     public Optional<PersonsIdModel> findPersonById(Long id){
         return personsIdRepository.findById(id);
     }
+    public List<PersonsIdModel> findPersonsBySurname(String surname){
+        return personsIdRepository.findAllByPersonSurnameEqualsIgnoreCase(surname);
+    }
 }
