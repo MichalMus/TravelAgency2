@@ -38,7 +38,7 @@ public class ContinentController {
         continentService.addNewContinent(continentModel);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(continentModel);
     }
 
     @DeleteMapping("/deleteContinent/{id}")
@@ -61,7 +61,7 @@ public class ContinentController {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(continentModel);
     }
 
 

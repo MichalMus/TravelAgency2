@@ -45,7 +45,7 @@ public class HotelController {
         hotelService.addNewHotel(hotelModel);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(hotelModel);
     }
 
     @DeleteMapping("/deleteHotel/{id}")
@@ -65,7 +65,7 @@ public class HotelController {
         hotelService.addNewHotel(hotelModel);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(hotelModel);
     }
 
 

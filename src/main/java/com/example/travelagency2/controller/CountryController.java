@@ -38,7 +38,7 @@ public class CountryController {
         countryService.addNewCountry(countryModel);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(countryModel);
     }
 
     @DeleteMapping("/deleteCountry/{id}")
@@ -58,7 +58,7 @@ public class CountryController {
         countryService.addNewCountry(countryModel);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(countryModel);
 
 }
 
