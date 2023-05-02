@@ -121,7 +121,7 @@ public class TravelController {
         travelService.addTravel(travelModel);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(travelModel);
 
     }
 
